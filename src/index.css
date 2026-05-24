@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --cream-50: #FDFBF7;
+  --cream-100: #FAF7F0;
+  --cream-200: #F5EFE0;
+  --espresso-500: #3D2314;
+  --espresso-600: #2A1709;
+  --espresso-700: #1A0E05;
+  --amber: #C8860A;
+  --amber-light: #F5A623;
+  --sage: #5E8A6E;
+  --rose-warm: #C0574A;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background-color: var(--cream-50);
+  color: var(--espresso-600);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cream-200);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d9c9a8;
+}
+
+/* Custom form elements */
+input, select, textarea {
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slideInRight 0.35s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease forwards;
+}
+
+.animate-stagger > * {
+  animation: fadeIn 0.4s ease forwards;
+  opacity: 0;
+}
+.animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.animate-stagger > *:nth-child(2) { animation-delay: 60ms; }
+.animate-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.animate-stagger > *:nth-child(4) { animation-delay: 180ms; }
+.animate-stagger > *:nth-child(5) { animation-delay: 240ms; }
+.animate-stagger > *:nth-child(6) { animation-delay: 300ms; }
+.animate-stagger > *:nth-child(7) { animation-delay: 360ms; }
+.animate-stagger > *:nth-child(8) { animation-delay: 420ms; }
+.animate-stagger > *:nth-child(9) { animation-delay: 480ms; }
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--cream-200) 25%,
+    #ede3cc 50%,
+    var(--cream-200) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* SweetAlert2 custom */
+.swal2-popup {
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  border-radius: 16px !important;
+  background: var(--cream-50) !important;
+  box-shadow: 0 24px 80px rgba(61, 35, 20, 0.20) !important;
+}
+
+.swal2-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  color: var(--espresso-600) !important;
+  font-size: 1.4rem !important;
+}
+
+.swal2-html-container {
+  color: #6b5544 !important;
+  font-size: 0.95rem !important;
+}
+
+.swal2-confirm {
+  background-color: var(--espresso-600) !important;
+  border-radius: 8px !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-weight: 500 !important;
+  padding: 10px 24px !important;
+  box-shadow: none !important;
+}
+
+.swal2-cancel {
+  background-color: var(--cream-200) !important;
+  color: var(--espresso-600) !important;
+  border-radius: 8px !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-weight: 500 !important;
+  padding: 10px 24px !important;
+  box-shadow: none !important;
+}
+
+.swal2-cancel:hover {
+  background-color: #ddd0b0 !important;
+}
+
+/* Focus ring */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
