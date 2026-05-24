@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>TABLE-TRACK</title>
+    <script>
+      // Redirige rutas de SPA a index.html manteniendo el path
+      const path = window.location.pathname;
+      const base = '/table-track';
+      const redirect = path.replace(base, '') || '/';
+      window.location.replace(base + '/?redirect=' + encodeURIComponent(redirect));
+    </script>
+  </head>
+  <body></body>
+</html>
