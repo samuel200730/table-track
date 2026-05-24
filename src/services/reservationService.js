@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-// MockAPI endpoint — replace with your own MockAPI project URL
-const BASE_URL = 'https://6748f0e75801f5ae7a545039.mockapi.io/api/v1'
+const BASE_URL = 'https://6a1257a078d0434e0d5d2c58.mockapi.io/api/v1'
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -29,6 +28,10 @@ export const deleteReservation = async (id) => {
 }
 
 export const finalizeReservation = async (id) => {
-  const response = await api.patch(`/reservations/${id}`, { estado: 'Finalizada' })
+  const current = await api.get(`/reservations/${id}`)
+  const response = await api.put(`/reservations/${id}`, {
+    ...current.data,
+    estado: 'Finalizada',
+  })
   return response.data
 }
