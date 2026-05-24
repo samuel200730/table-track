@@ -1,43 +1,75 @@
 # 🍽️ TABLE-TRACK · Gestor de Reservas
 
-Sistema de gestión de reservas para restaurantes. Aplicación SPA construida con React + Vite para prueba técnica de Desarrollador Frontend Junior.
+Sistema de gestión de reservas para restaurantes. Aplicación SPA desarrollada como prueba técnica para la vacante de Desarrollador Frontend Junior.
+
+---
+
+## 📋 Descripción
+
+TABLE-TRACK permite a los anfitriones de un restaurante gestionar las reservas de mesas de forma eficiente. Desde la aplicación se puede iniciar sesión, visualizar todas las reservas, crear nuevas, editarlas, finalizarlas y cancelarlas.
 
 ---
 
 ## 🚀 Stack Tecnológico
 
-| Tecnología | Uso |
-|---|---|
-| **React 18 + Vite** | Framework + bundler |
-| **react-router-dom v6** | Routing + protected routes |
-| **Tailwind CSS v3** | Estilos responsive |
-| **SweetAlert2** | Confirmaciones y alertas |
-| **Axios** | Peticiones HTTP |
-| **LocalStorage** | Sesión simulada |
+| Tecnología | Versión | Uso |
+|---|---|---|
+| React.js | 18 | Framework principal |
+| Vite | 5 | Bundler y servidor de desarrollo |
+| react-router-dom | 6 | Enrutamiento y rutas protegidas |
+| Tailwind CSS | 3 | Estilos responsive |
+| SweetAlert2 | 11 | Alertas y confirmaciones |
+| Axios | 1.6 | Peticiones HTTP |
+| LocalStorage | — | Sesión simulada |
+| MockAPI | — | API REST fake |
 
 ---
 
-## 📁 Arquitectura
+## 🌐 API
+
+La aplicación consume una API REST creada en MockAPI:
+
+```
+https://6a1257a078d0434e0d5d2c58.mockapi.io/api/v1/reservations
+```
+
+### Estructura de la entidad Reserva
+
+```json
+{
+  "id": "1",
+  "nombreCliente": "María López",
+  "fechaHora": "2026-05-27T20:00",
+  "cantidadPersonas": 4,
+  "estado": "Confirmada"
+}
+```
+
+Estados disponibles: `Confirmada` · `En Espera` · `Finalizada`
+
+---
+
+## 📁 Arquitectura del Proyecto
 
 ```
 src/
  ├── components/
  │    ├── ReservationCard.jsx    # Card individual de reserva
- │    ├── ReservationForm.jsx    # Modal de crear/editar
+ │    ├── ReservationForm.jsx    # Modal crear/editar
  │    ├── Header.jsx             # Barra de navegación
  │    ├── FilterButtons.jsx      # Filtros por estado
- │    ├── Loader.jsx             # Spinner + skeleton cards
+ │    ├── Loader.jsx             # Spinner y skeleton cards
  │    └── EmptyState.jsx         # Estado vacío
  │
  ├── pages/
- │    ├── Login.jsx              # Página de login
+ │    ├── Login.jsx              # Página de ingreso
  │    └── Panel.jsx              # Dashboard principal
  │
  ├── routes/
- │    └── ProtectedRoute.jsx     # Guard de rutas privadas
+ │    └── ProtectedRoute.jsx     # Protección de rutas privadas
  │
  ├── services/
- │    └── reservationService.js  # Todas las llamadas HTTP
+ │    └── reservationService.js  # Todas las peticiones HTTP
  │
  ├── hooks/
  │    └── useReservations.js     # Hook CRUD de reservas
@@ -54,102 +86,81 @@ src/
 
 ---
 
-## ⚙️ Configuración
+## ⚙️ Instalación y ejecución local
 
-### 1. Clonar e instalar
+### 1. Clonar el repositorio
 
 ```bash
-git clone <repo>
+git clone https://github.com/samuel200730/table-track.git
 cd table-track
+```
+
+### 2. Instalar dependencias
+
+```bash
 npm install
 ```
 
-### 2. Configurar la API (MockAPI)
-
-1. Crea un proyecto en [mockapi.io](https://mockapi.io)
-2. Crea el recurso `/reservations` con el schema:
-
-```json
-{
-  "id": "autoincrement",
-  "nombreCliente": "string",
-  "fechaHora": "datetime",
-  "cantidadPersonas": "number",
-  "estado": "Confirmada | En Espera | Finalizada"
-}
-```
-
-3. Reemplaza la URL en `src/services/reservationService.js`:
-
-```js
-const BASE_URL = 'https://TU_PROYECTO.mockapi.io/api/v1'
-```
-
-### 3. Ejecutar
+### 3. Ejecutar en modo desarrollo
 
 ```bash
 npm run dev
 ```
 
-Abre [http://localhost:5173](http://localhost:5173)
+Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
+
+### 4. Construir para producción
+
+```bash
+npm run build
+```
 
 ---
 
 ## 🔑 Funcionalidades
 
-### Login
-- Nombre completo + selección de turno (Mañana / Tarde / Noche)
-- Sesión guardada en LocalStorage
-- Redirección automática si ya hay sesión activa
-- Protección de rutas privadas
+### Módulo de Login
+- Registro de nombre completo y turno (Mañana / Tarde / Noche)
+- Sesión persistida en LocalStorage
+- Redirección automática si ya existe sesión activa
+- Rutas protegidas — sin sesión redirige al login
 
-### Dashboard
-- Estadísticas de reservas por estado
+### Dashboard de Reservas
+- Estadísticas en tiempo real por estado
 - Filtros rápidos: Todas / Confirmadas / En Espera / Finalizadas
-- Refresh manual de datos
+- Skeleton loaders durante la carga de datos
+- Estado vacío cuando no hay reservas
 
-### CRUD de Reservas
-- **Crear**: Modal con validaciones (nombre y personas obligatorios)
-- **Editar**: Modifica fecha, cantidad y estado
-- **Finalizar**: Botón rápido → cambia estado a "Finalizada"
-- **Eliminar**: Confirmación con SweetAlert2 + alerta de éxito
+### CRUD Completo
+- **Crear** — formulario con validaciones obligatorias
+- **Editar** — modificar fecha, cantidad de personas y estado
+- **Finalizar** — botón rápido para marcar como finalizada
+- **Cancelar** — confirmación con SweetAlert2 antes de eliminar
 
 ### Estados con colores
 | Estado | Color |
 |---|---|
 | Confirmada | 🟢 Verde |
-| En Espera | 🟡 Amarillo/Ámbar |
+| En Espera | 🟡 Ámbar |
 | Finalizada | ⚫ Gris |
 
 ---
 
-## 🏗️ Decisiones de diseño
-
-- **Sin Context API ni Redux** — estado local con `useState` y custom hook `useReservations`
-- **Sin TypeScript** — JavaScript puro con código legible
-- **Async/await con try/catch** en todas las peticiones
-- **Mobile-first** — responsive desde 320px
-- **Skeleton loaders** durante la carga inicial
-
----
-
-## 📝 Scripts disponibles
-
-```bash
-npm run dev      # Desarrollo
-npm run build    # Producción
-npm run preview  # Preview del build
-```
-
----
-
-## 🌿 GitFlow sugerido
+## 🌿 GitFlow utilizado
 
 ```
 main
 └── develop
-     ├── feature/login
-     ├── feature/panel-dashboard
-     ├── feature/reservation-crud
+     ├── feature/login-system
+     ├── feature/reservations-crud
+     ├── feature/ui-polishing
      └── feature/filters
 ```
+
+---
+
+## 🔗 Enlaces
+
+- **Repositorio:** https://github.com/samuel200730/table-track
+- **App desplegada:** https://samuel200730.github.io/table-track/
+- **API MockAPI:** https://6a1257a078d0434e0d5d2c58.mockapi.io/api/v1/reservations
